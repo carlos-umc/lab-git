@@ -1,19 +1,18 @@
 #!/bin/bash
 
-sbatch --job-name=cut-fastq --ntasks=1 --cpus-per-task=4 --output=cut-fastq.out <<EOF
-#!/bin/bash
-# Nombre del trabajo: cut-fastq
-#SBATCH --partition=hpc-bio-pacioli      # Cola de trabajo
+# Job name
 #SBATCH --job-name=cut-fastq            # Nombre del trabajo
-#SBATCH --ntasks=1                      # Número de tareas
-#SBATCH --cpus-per-task=4               # Número de CPUs por tarea
+#SBATCH --ntasks=1                      # Número de tareas (1 para SLURM)
+#SBATCH --cpus-per-task=4               # Número de CPUs por tarea (para procesamiento paralelo)
 #SBATCH --time=01:00:00                 # Tiempo máximo (1 hora)
-#SBATCH --output=cut-fastq-%j.out       # Archivo de salida (incluye ID de trabajo)
+#SBATCH --partition=hpc-bio-pacioli     # Cola de trabajo
+#SBATCH --output=/home/alumno25/lab-git/cut-fastq-%j.out  # Ruta para el archivo de salida
 
-# Módulos necesarios
+# Cargar el módulo necesario
 module load fastqc
 
-# Ejecutar el script de corte
+# Ejecutar el script de corte desde el directorio lab-git
+cd /home/alumno25/lab-git
 ./file-cut.sh
-EOF
+
 
